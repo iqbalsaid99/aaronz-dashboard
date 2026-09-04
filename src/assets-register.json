@@ -1,0 +1,191 @@
+[
+  {
+    "code": "ARZ-OE-011",
+    "serial": null,
+    "name": "Tripod",
+    "type": "Tripod",
+    "note": null
+  },
+  {
+    "code": "ARZ-OE-012",
+    "serial": "FL0469996",
+    "name": "Rode Microphone (wire)",
+    "type": "Camera Microphone",
+    "note": null
+  },
+  {
+    "code": "ARZ-OE-013",
+    "serial": "FM0469996",
+    "name": "Rode Microphone",
+    "type": "Camera Microphone",
+    "note": null
+  },
+  {
+    "code": "ARZ-OE-014",
+    "serial": null,
+    "name": "Canon Mount Adapter EF-EOS R",
+    "type": "Camera Mount",
+    "note": "Handwritten 1; name struck through"
+  },
+  {
+    "code": "ARZ-OE-015",
+    "serial": "DS126721",
+    "name": "Canon EOS R Camera + SanDisk 128GB SD Card",
+    "type": "Camera",
+    "note": null
+  },
+  {
+    "code": "ARZ-OE-016",
+    "serial": null,
+    "name": "Canon 10-18mm Macro 0.22m/0.7ft Wide Angle Lens",
+    "type": "Camera Lens",
+    "note": "Handwritten 2 beside Asset Type"
+  },
+  {
+    "code": "ARZ-OE-017",
+    "serial": null,
+    "name": "Canon 24-105mm Wide Angle Lens",
+    "type": "Camera Lens",
+    "note": "Handwritten 2; ticked"
+  },
+  {
+    "code": "ARZ-OE-018",
+    "serial": "M21E068281",
+    "name": "Godox XPROC + Power extra fast USB C Smart Dual charger + Pocket Flash + softbo[x]",
+    "type": "Camera Transmitter",
+    "note": "Name truncated on original"
+  },
+  {
+    "code": "ARZ-OE-019",
+    "serial": "77104BO55010093",
+    "name": "Zhiyun Gimbal",
+    "type": "Gimbal",
+    "note": null
+  },
+  {
+    "code": "ARZ-OE-020",
+    "serial": null,
+    "name": "Rokinon Samyang 0.20m/0.66ft Lens",
+    "type": "Camera Lens",
+    "note": "Handwritten 3; ticked"
+  },
+  {
+    "code": "ARZ-OE-021",
+    "serial": null,
+    "name": "DJI Ronin Gimbal Stabilizer",
+    "type": "Gimbal",
+    "note": "Handwritten 4; ticked; annotated RS4"
+  },
+  {
+    "code": "ARZ-OE-022",
+    "serial": null,
+    "name": "Godo flash head AD 200",
+    "type": null,
+    "note": "Asset Type blank on original"
+  },
+  {
+    "code": "ARZ-OE-023",
+    "serial": null,
+    "name": "LED Studio lamp x2 Yongnu 1",
+    "type": "Camera Lens",
+    "note": "Type likely mislabelled on original"
+  },
+  {
+    "code": "ARZ-OE-024",
+    "serial": null,
+    "name": "LED Studio lamp x2 Yongnu 2",
+    "type": "Camera Lens",
+    "note": "Type likely mislabelled on original"
+  },
+  {
+    "code": "ARZ-OE-028",
+    "serial": null,
+    "name": "GMM Light",
+    "type": "Lights",
+    "note": null
+  },
+  {
+    "code": "ARZ-OE-029",
+    "serial": null,
+    "name": "Godox XPROC + Power extra fast USB C Smart Dual charger + Pocket Flash + softbo[x]",
+    "type": "Camera flash",
+    "note": "Handwritten 5; name partly struck through; truncated"
+  },
+  {
+    "code": "ARZ-OE-033",
+    "serial": null,
+    "name": "Canon EOS R6 Full set",
+    "type": "Camera Equipment",
+    "note": "Handwritten 6"
+  },
+  {
+    "code": "ARZ-OE-036",
+    "serial": null,
+    "name": "Neewer light 1",
+    "type": "Lights",
+    "note": null
+  },
+  {
+    "code": "ARZ-OE-037",
+    "serial": null,
+    "name": "Neewer light 2",
+    "type": "Lights",
+    "note": null
+  },
+  {
+    "code": "ARZ-CE-057",
+    "serial": "X001MPBZDBSF-GD32",
+    "name": "MAKINGTEC Aluminum L Bracket for DJI Ronin Neewer Octagon Flash Softbox",
+    "type": "Camera Equipment",
+    "note": null
+  },
+  {
+    "code": "ARZ-CE-62",
+    "serial": "Q9DGP24LFH",
+    "name": "Apple Macbook Pro 16\" M2-AOS A2780",
+    "type": "Laptop",
+    "note": "Grouped row: Macbook + charger + wire share one code"
+  },
+  {
+    "code": "ARZ-CE-62",
+    "serial": "Q9DGP24LFH",
+    "name": "140W USB-C Power Adapter Charger A2452",
+    "type": "Laptop",
+    "note": "Part of grouped Macbook row"
+  },
+  {
+    "code": "ARZ-CE-62",
+    "serial": "Q9DGP24LFH",
+    "name": "Charger Wire",
+    "type": "Laptop",
+    "note": "Part of grouped Macbook row"
+  },
+  {
+    "code": null,
+    "serial": null,
+    "name": "Rollei pro flash",
+    "type": null,
+    "note": "No Asset Code on original"
+  },
+  {
+    "code": "ARZ-EO-40",
+    "serial": null,
+    "name": "Neewer LCD field monitor",
+    "type": null,
+    "note": "EO prefix as written; possible typo for OE"
+  },
+  {
+    "code": null,
+    "serial": null,
+    "name": "Weetontung connector",
+    "type": null,
+    "note": "No Asset Code on original"
+  },
+  {
+    "code": "ARZ-EO-39",
+    "serial": null,
+    "name": "Wand light-charger",
+    "type": null,
+    "note": "EO prefix as written; possible typo for OE"
+  }
+]

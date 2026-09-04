@@ -1,0 +1,22 @@
+{
+  "name": "dubai-listing-lookup",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "discover": "node discover.js",
+    "inspect": "node inspect.js",
+    "server": "node server.js",
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.4.0"
+  }
+}

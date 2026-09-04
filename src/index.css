@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+
+/**
+ * The refresh control while a pull is in flight.
+ *
+ * The spinning icon alone was too quiet for what these pulls actually cost —
+ * the widest window pages through thousands of leads and can run the better
+ * part of a minute, long enough that a still-loading screen reads as a finished
+ * one showing wrong numbers. The whole control breathes green instead, so it is
+ * visible from across the page rather than only if you are looking at the icon.
+ *
+ * Green because nothing is wrong: this is work in progress, not a warning. The
+ * colours are Tailwind's own green-50/300/700 against white/slate-200/slate-700
+ * so it lands back on the button's resting state at each cycle rather than
+ * flashing between two unrelated looks.
+ *
+ * The icon animates separately because its colour is set by a utility class on
+ * the element itself; a CSS animation outranks a normal declaration, which is
+ * what lets this override it without !important or touching every call site.
+ */
+/*
+ * The green is held as a flat state and the FADE is opacity, rather than
+ * animating background-color between white and green. Two reasons: a keyframed
+ * colour has to out-argue the utility classes already on these buttons, which
+ * is a cascade fight with no upside; and green-50 against white is a few points
+ * of luminance — technically a pulse, invisible across a room. Emerald at full
+ * strength fading to just over half reads as one control breathing.
+ *
+ * !important because every one of these buttons carries bg-white and a slate
+ * border from a utility class of equal specificity, and which wins would
+ * otherwise depend on stylesheet order.
+ */
+@keyframes fetching-fade {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 1; }
+}
+
+.is-fetching {
+  background-color: #ecfdf5 !important;   /* emerald-50  */
+  border-color: #6ee7b7 !important;       /* emerald-300 */
+  color: #047857 !important;              /* emerald-700 */
+  animation: fetching-fade 1.15s ease-in-out infinite;
+}
+
+.is-fetching svg { color: #059669 !important; }   /* emerald-600 */
+
+/* Someone who has asked for less motion still needs to know it is working, so
+   the green stays — it just stops breathing. */
+@media (prefers-reduced-motion: reduce) {
+  .is-fetching { animation: none; opacity: 1; }
+}

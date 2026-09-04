@@ -1,0 +1,476 @@
+{
+  "generated": "2026-08-03T10:45:27.934Z",
+  "total": 67,
+  "saved": [
+    {
+      "id": 1505936,
+      "name": "Aayushi Shah",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-7q6g9u248mmyfjqksbqg.jpg",
+      "jobTitle": "Property Advisor",
+      "file": "Aayushi-Shah.jpg",
+      "bytes": 3881
+    },
+    {
+      "id": 1506056,
+      "name": "Agnes Juancito Gagne",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-k54o7rdid35t3npwmesx.jpeg",
+      "jobTitle": "Senior Property Advisor",
+      "file": "Agnes-Juancito-Gagne.jpg",
+      "bytes": 4680
+    },
+    {
+      "id": 1504615,
+      "name": "Allinson Aranha",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-2sacoy37vzd0176dxm3j.jpg",
+      "jobTitle": "Property Advisor",
+      "file": "Allinson-Aranha.jpg",
+      "bytes": 4494
+    },
+    {
+      "id": 1502497,
+      "name": "Anit Madhani",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-lpxvw03ulf1ka79pw5qh.jpg",
+      "jobTitle": "Senior Property Advisor",
+      "file": "Anit-Madhani.jpg",
+      "bytes": 4529
+    },
+    {
+      "id": 1506547,
+      "name": "Billie Holcroft",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-tp94vf5dt3ukqxnjwohd.jpeg",
+      "jobTitle": "Sales and Leasing Director",
+      "file": "Billie-Holcroft.jpg",
+      "bytes": 5035
+    },
+    {
+      "id": 1503943,
+      "name": "Binayak Bhattarai",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-pgsc6pmeyi9qyc4475qn.png",
+      "jobTitle": "Commercial Consultant",
+      "file": "Binayak-Bhattarai.png",
+      "bytes": 22775
+    },
+    {
+      "id": 1503566,
+      "name": "Brandon Baerwaldt",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-e2bsx2jdylipws9j8uhr.jpg",
+      "jobTitle": "Property Advisor",
+      "file": "Brandon-Baerwaldt.jpg",
+      "bytes": 4735
+    },
+    {
+      "id": 1498226,
+      "name": "Dennis Manalo",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/150/3410-za6103t8osd2wjl5db1d.jpg",
+      "jobTitle": "Sales Manager - JLT",
+      "file": "Dennis-Manalo.jpg",
+      "bytes": 4854
+    },
+    {
+      "id": 1504616,
+      "name": "Devika Pradeep",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-p57cpox70inpnbd400ch.jpeg",
+      "jobTitle": "Property Management",
+      "file": "Devika-Pradeep.jpg",
+      "bytes": 5529
+    },
+    {
+      "id": 1503663,
+      "name": "Dikshant Gangurde",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-0f2aruerhefbvmjkd6z8.jpg",
+      "jobTitle": "Property Advisor",
+      "file": "Dikshant-Gangurde.jpg",
+      "bytes": 5102
+    },
+    {
+      "id": 1504117,
+      "name": "Divantha Madushan",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-cjx19981y30vsi7apqt4.jpg",
+      "jobTitle": "Commercial Consultant",
+      "file": "Divantha-Madushan.jpg",
+      "bytes": 5526
+    },
+    {
+      "id": 1503037,
+      "name": "Filbert Ian Linco",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-ctu7dhwhazn6xnjfy0mx.jpg",
+      "jobTitle": "Sales & Rental Specialist",
+      "file": "Filbert-Ian-Linco.jpg",
+      "bytes": 5303
+    },
+    {
+      "id": 1504461,
+      "name": "Ivelina Ivanova",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-wan9q643f29k2gl8bfsy.jpg",
+      "jobTitle": "Property Advisor",
+      "file": "Ivelina-Ivanova.jpg",
+      "bytes": 6901
+    },
+    {
+      "id": 1503888,
+      "name": "Jason Trevor",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-zz1oi532kqr9tndxq05c.jpg",
+      "jobTitle": "Property Advisor",
+      "file": "Jason-Trevor.jpg",
+      "bytes": 4782
+    },
+    {
+      "id": 1504024,
+      "name": "John Paul",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-g8mfjyrayx534shazi9n.jpg",
+      "jobTitle": "Commercial Consultant",
+      "file": "John-Paul.jpg",
+      "bytes": 4462
+    },
+    {
+      "id": 1492409,
+      "name": "Johnson Antonio",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/150/3410-v9l945luz58o4g4lf0zu.jpg",
+      "jobTitle": "Sales & Leasing Director",
+      "file": "Johnson-Antonio.jpg",
+      "bytes": 4441
+    },
+    {
+      "id": 1503891,
+      "name": "Jordan Connor",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-qr4iq396jha3ie1bbw9i.jpg",
+      "jobTitle": "Property Advisor",
+      "file": "Jordan-Connor.jpg",
+      "bytes": 4912
+    },
+    {
+      "id": 1503762,
+      "name": "Kamille Ampong",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-fukf9e8lecjc3l5kchu3.jpg",
+      "jobTitle": "Property Manager",
+      "file": "Kamille-Ampong.jpg",
+      "bytes": 5262
+    },
+    {
+      "id": 1503939,
+      "name": "Kristina Lanto",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-wwy3yhm1h5pdcg3kn8uh.jpg",
+      "jobTitle": "Property Manager",
+      "file": "Kristina-Lanto.jpg",
+      "bytes": 6587
+    },
+    {
+      "id": 1504929,
+      "name": "Lavania Jiju",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-o2x1e2uyu9tbysvff5wu.jpg",
+      "jobTitle": "Property Advisor",
+      "file": "Lavania-Jiju.jpg",
+      "bytes": 5047
+    },
+    {
+      "id": 1494219,
+      "name": "Linda Kuhn",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/150/3410-yayeeo0kn2jyvcjx7s3s.jpg",
+      "jobTitle": "Senior Property Consultant",
+      "file": "Linda-Kuhn.jpg",
+      "bytes": 4288
+    },
+    {
+      "id": 1503628,
+      "name": "Lyba Waqar",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-bxmjytrrxlhsoj9zmol4.jpg",
+      "jobTitle": "Senior Property Advisor",
+      "file": "Lyba-Waqar.jpg",
+      "bytes": 5224
+    },
+    {
+      "id": 1506651,
+      "name": "Maricar Padilla",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-92cbbrvpn4rnctcwm0x1.png",
+      "jobTitle": "Property Advisor",
+      "file": "Maricar-Padilla.png",
+      "bytes": 27874
+    },
+    {
+      "id": 1505944,
+      "name": "Marimar Pacursa",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-n3z45vpp2aviqev9ihzv.jpeg",
+      "jobTitle": "Reception",
+      "file": "Marimar-Pacursa.jpg",
+      "bytes": 5269
+    },
+    {
+      "id": 1506654,
+      "name": "May Clares",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-0i9cn96tzo56282544z9.png",
+      "jobTitle": "Property Advisor",
+      "file": "May-Clares.png",
+      "bytes": 26038
+    },
+    {
+      "id": 1502629,
+      "name": "Mera Paquibot",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-7ir9ehzg5j7981sswiz5.jpg",
+      "jobTitle": "Property Manager ",
+      "file": "Mera-Paquibot.jpg",
+      "bytes": 4810
+    },
+    {
+      "id": 1503041,
+      "name": "Michelle Tabuñar",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-xmxzs7lrqkpo9cvi6se6.jpg",
+      "jobTitle": "Property Advisor",
+      "file": "Michelle-Tabuar.jpg",
+      "bytes": 5566
+    },
+    {
+      "id": 1492279,
+      "name": "Muhammad Yaseen",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/150/3410-7ypqjus5mfv9flslt4jy.jpg",
+      "jobTitle": "Sales & Rental Specialist ",
+      "file": "Muhammad-Yaseen.jpg",
+      "bytes": 6352
+    },
+    {
+      "id": 1500405,
+      "name": "Myka Eisma",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-v1kgj9ktgb7gd61mtrsa.jpg",
+      "jobTitle": "Sales Manager - Dubai Marina",
+      "file": "Myka-Eisma.jpg",
+      "bytes": 5216
+    },
+    {
+      "id": 1505580,
+      "name": "Paul Angeles",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-ky2bv4w533vwewkjqjx4.jpg",
+      "jobTitle": "Property Advisor",
+      "file": "Paul-Angeles.jpg",
+      "bytes": 5258
+    },
+    {
+      "id": 1503942,
+      "name": "Priyabrata Rath",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-taohn6u175kfvsezbxni.jpg",
+      "jobTitle": "Associate Director",
+      "file": "Priyabrata-Rath.jpg",
+      "bytes": 5131
+    },
+    {
+      "id": 1505600,
+      "name": "Ravneet Chipra",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-53ixpdhh94dvf8ymyu6r.jpg",
+      "jobTitle": "Property Advisor",
+      "file": "Ravneet-Chipra.jpg",
+      "bytes": 4706
+    },
+    {
+      "id": 1503940,
+      "name": "Sarmistha Swain",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-0wbmi2cenyukdpbuydwt.jpg",
+      "jobTitle": "Senior Property Advisor",
+      "file": "Sarmistha-Swain.jpg",
+      "bytes": 5227
+    },
+    {
+      "id": 1506552,
+      "name": "Saurabh Kannojiya",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-9o6lv8qyc52psegjl2t2.jpeg",
+      "jobTitle": "Commercial Consultant",
+      "file": "Saurabh-Kannojiya.jpg",
+      "bytes": 5323
+    },
+    {
+      "id": 1502474,
+      "name": "Shiela Yanong",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-oz52341rhlczc5o3eoom.jpg",
+      "jobTitle": "Team Leader - Dubai Marina",
+      "file": "Shiela-Yanong.jpg",
+      "bytes": 5433
+    },
+    {
+      "id": 1503042,
+      "name": "Sofia Zahraoui",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-65eb6jwla0zx2vpvkvr5.jpg",
+      "jobTitle": "Commercial Consultant",
+      "file": "Sofia-Zahraoui.jpg",
+      "bytes": 6423
+    },
+    {
+      "id": 1503990,
+      "name": "Sugandha Parab",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-mhpvumyd0lytugpw0a5g.jpg",
+      "jobTitle": "Commercial Consultant",
+      "file": "Sugandha-Parab.jpg",
+      "bytes": 5443
+    },
+    {
+      "id": 1505855,
+      "name": "Vinay Menon",
+      "photo": "https://propspace-broker-production.s3.amazonaws.com/users/151/3410-3ud2r26nd0c2572i2dpx.jpg",
+      "jobTitle": "Property Advisor",
+      "file": "Vinay-Menon.jpg",
+      "bytes": 5613
+    }
+  ],
+  "noPhoto": [
+    {
+      "id": 1492207,
+      "name": "Aaronz And Co Real Estate LLC",
+      "photo": "",
+      "jobTitle": "Company"
+    },
+    {
+      "id": 1504042,
+      "name": "Ahmed Syed",
+      "photo": "",
+      "jobTitle": "Commercial Consultant"
+    },
+    {
+      "id": 1506853,
+      "name": "Aman Mehndiratta",
+      "photo": null
+    },
+    {
+      "id": 1506824,
+      "name": "Anam Zohaib",
+      "photo": "",
+      "jobTitle": "Property Advisor"
+    },
+    {
+      "id": 1506848,
+      "name": "Ashif Ahmed Valli Chand",
+      "photo": null
+    },
+    {
+      "id": 1503937,
+      "name": "Ceejay Corpus",
+      "photo": "",
+      "jobTitle": "Listing Manager"
+    },
+    {
+      "id": 1502508,
+      "name": "Conaire Jenkins",
+      "photo": "",
+      "jobTitle": "Sales & Rental Specialist"
+    },
+    {
+      "id": 1503036,
+      "name": "Daniela Afonso",
+      "photo": "",
+      "jobTitle": "Sales & Rental Specialist"
+    },
+    {
+      "id": 1502496,
+      "name": "Daniela Varga",
+      "photo": "",
+      "jobTitle": "Sales & Rental Specialist"
+    },
+    {
+      "id": 1506392,
+      "name": "Ekaterina Kovaleva",
+      "photo": null
+    },
+    {
+      "id": 1506825,
+      "name": "Fuzail Ahmed",
+      "photo": "",
+      "jobTitle": "Property Advisor"
+    },
+    {
+      "id": 1506823,
+      "name": "Henna Zulfiqar",
+      "photo": null
+    },
+    {
+      "id": 1503114,
+      "name": "Ionut Tudorache",
+      "photo": "",
+      "jobTitle": "Sales & Rental Specialist"
+    },
+    {
+      "id": 1503040,
+      "name": "Iosef Tudorache",
+      "photo": "",
+      "jobTitle": "Sales & Rental Specialist"
+    },
+    {
+      "id": 1506553,
+      "name": "Khanh Linh Chao",
+      "photo": "",
+      "jobTitle": "Property Advisor"
+    },
+    {
+      "id": 1506852,
+      "name": "Lateef Ogunbadejo",
+      "photo": null
+    },
+    {
+      "id": 1504357,
+      "name": "Leslie Anne Manalastas",
+      "photo": null
+    },
+    {
+      "id": 1500277,
+      "name": "Marketing Aaronz",
+      "photo": "",
+      "jobTitle": ""
+    },
+    {
+      "id": 1502237,
+      "name": "Michelle Padilla",
+      "photo": "",
+      "jobTitle": "Property Consultant"
+    },
+    {
+      "id": 1506849,
+      "name": "Mohmed Aamir Chand",
+      "photo": null
+    },
+    {
+      "id": 1500064,
+      "name": "Moiz Banga",
+      "photo": "",
+      "jobTitle": "Sales & Rental Specialist"
+    },
+    {
+      "id": 1506826,
+      "name": "Muhammad Adeel",
+      "photo": null
+    },
+    {
+      "id": 1506822,
+      "name": "Muhammad Kashif Aminullah",
+      "photo": "",
+      "jobTitle": "Associate Director"
+    },
+    {
+      "id": 1502501,
+      "name": "Nigel Penney",
+      "photo": "",
+      "jobTitle": "Sales & Rental Specialist"
+    },
+    {
+      "id": 1506813,
+      "name": "Parmeet Singh",
+      "photo": null
+    },
+    {
+      "id": 1506550,
+      "name": "Patrick Paul Christian Mullaly",
+      "photo": null
+    },
+    {
+      "id": 1504645,
+      "name": "Sachi Shukla",
+      "photo": "",
+      "jobTitle": "Admin"
+    },
+    {
+      "id": 1503938,
+      "name": "Sheena Mejado",
+      "photo": "",
+      "jobTitle": "Property Coodinator"
+    },
+    {
+      "id": 1504959,
+      "name": "Training Aaronz",
+      "photo": null
+    }
+  ],
+  "failed": []
+}

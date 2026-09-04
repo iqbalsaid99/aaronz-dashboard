@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Personal Branding — Aaronz &amp; Co</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;900&family=Poppins:wght@400;500;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; }
+  body { background: #EFEAE0; }
+  a { color: #2F6475; text-decoration: none; }
+  a:hover { color: #0C2036; }
+  #sgw-scroll::-webkit-scrollbar { width: 0; }
+  /* The wheel belongs to the four habits. Styles is a different argument, so
+     the art leaves rather than sitting there rotating at nothing — and the
+     column it was reserving becomes the room the clips grow into. */
+  #sgw-art {
+    transition: transform 720ms cubic-bezier(0.22,0.61,0.36,1), opacity 460ms ease;
+    will-change: transform;
+  }
+  #sgw-art.gone { transform: translateY(-108%); opacity: 0; pointer-events: none; }
+  @media (prefers-reduced-motion: reduce) {
+    #sgw-art { transition: opacity 200ms ease; }
+    #sgw-art.gone { transform: none; opacity: 0; }
+  }
+
+  @keyframes sgwCue { 0%, 100% { transform: translateY(0); opacity: 0.7; } 50% { transform: translateY(8px); opacity: 1; } }
+
+  /* Audio toggle. Small, bottom-right, over the clip — visible on the navy
+     footage without a plate heavy enough to cover the speaker's face. */
+  .sgw-audio {
+    position: absolute; right: 10px; bottom: 10px; z-index: 4;
+    width: 34px; height: 34px; padding: 0; border-radius: 999px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; background: rgba(12, 32, 54, 0.66);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    transition: background 160ms ease, transform 160ms ease;
+  }
+  .sgw-audio:hover { background: rgba(12, 32, 54, 0.85); transform: scale(1.06); }
+  .sgw-audio:focus-visible { outline: 2px solid #C8A24B; outline-offset: 2px; }
+  .sgw-audio .on { display: none; }
+  .sgw-audio[data-on="1"] { background: #C8A24B; border-color: rgba(255, 255, 255, 0.5); color: #0E0E0E; }
+  .sgw-audio[data-on="1"] .on { display: block; }
+  .sgw-audio[data-on="1"] .off { display: none; }
+
+  @media (prefers-reduced-motion: reduce) { .sgw-audio { transition: none; } }
+</style>
+</head>
+<body>
+<div id="sgw-scroll" style="--r: min(88vh, 62vw); --col: calc(var(--r) + clamp(28px, 3vw, 64px)); height: 100vh; overflow-y: auto; scroll-snap-type: y proximity; scrollbar-width: none; background: #EFEAE0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+
+  <div style="position: sticky; top: 0; height: 100vh; margin-bottom: -100vh; z-index: 0; overflow: hidden;">
+    <div id="sgw-art" style="position: absolute; inset: 0;">
+    <div id="sgw-wheel" style="position: absolute; left: 0; top: 0; width: calc(2 * var(--r)); height: calc(2 * var(--r)); border-radius: 50%; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; transform: translate(-50%, -50%) rotate(0deg); transition: transform 620ms cubic-bezier(0.22,0.61,0.36,1); will-change: transform; background: #0C2036;">
+      <div style="position: relative; overflow: hidden;">
+        <div id="sgw-img-0" style="position: absolute; inset: -21%; transition: transform 620ms cubic-bezier(0.22,0.61,0.36,1); will-change: transform;">
+          <img src="images/stay-ready.jpg" alt="Broker filming content" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; display: block;">
+        </div>
+        <div id="sgw-veil-0" style="position: absolute; inset: 0; background: #0C2036; opacity: 0.5; transition: opacity 420ms ease; pointer-events: none;"></div>
+      </div>
+      <div style="position: relative; overflow: hidden;">
+        <div id="sgw-img-1" style="position: absolute; inset: -21%; transition: transform 620ms cubic-bezier(0.22,0.61,0.36,1); will-change: transform;">
+          <img src="images/stay-cool.jpg" alt="Team mid-conversation" style="width: 100%; height: 100%; object-fit: cover; object-position: 46% 34%; display: block;">
+        </div>
+        <div id="sgw-veil-1" style="position: absolute; inset: 0; background: #0C2036; opacity: 0.5; transition: opacity 420ms ease; pointer-events: none;"></div>
+      </div>
+      <div style="position: relative; overflow: hidden;">
+        <div id="sgw-img-2" style="position: absolute; inset: -21%; transition: transform 620ms cubic-bezier(0.22,0.61,0.36,1); will-change: transform;">
+          <img src="images/stay-broke.jpg" alt="Agent at her desk" style="width: 100%; height: 100%; object-fit: cover; object-position: 54% 40%; display: block;">
+        </div>
+        <div id="sgw-veil-2" style="position: absolute; inset: 0; background: #0C2036; opacity: 0.5; transition: opacity 420ms ease; pointer-events: none;"></div>
+      </div>
+      <div style="position: relative; overflow: hidden;">
+        <div id="sgw-img-3" style="position: absolute; inset: -21%; transition: transform 620ms cubic-bezier(0.22,0.61,0.36,1); will-change: transform;">
+          <img src="images/stay-informed.jpg" alt="Agent reviewing the market" style="width: 100%; height: 100%; object-fit: cover; object-position: 56% 42%; display: block;">
+        </div>
+        <div id="sgw-veil-3" style="position: absolute; inset: 0; background: #0C2036; opacity: 0; transition: opacity 420ms ease; pointer-events: none;"></div>
+      </div>
+    </div>
+
+    <div style="position: absolute; left: 0; top: 0; width: 56vh; height: 56vh; border-radius: 50%; transform: translate(-50%, -50%); background: #0C2036; z-index: 2;"></div>
+    <img src="images/aaronz-logo-white.png" alt="Aaronz &amp; Co" style="position: absolute; left: 34px; top: 30px; height: max(64px, 8.5vh); width: auto; display: block; z-index: 3;">
+    </div>
+
+    <div style="position: absolute; right: clamp(28px, 3vw, 56px); top: 40px; z-index: 3; display: flex; flex-direction: column; align-items: flex-end; gap: 14px; width: min(220px, 34%);">
+      <div style="display: flex; align-items: baseline; gap: 12px;">
+        <span id="sgw-step" style="font: 700 max(16px, 1.9vh)/1 'Archivo', sans-serif; letter-spacing: 0.14em; color: #0E0E0E;">01</span>
+        <span style="font: 600 max(11px, 1.25vh)/1 'Poppins', sans-serif; letter-spacing: 0.24em; color: rgba(14,14,14,0.45); white-space: nowrap;">/ 08</span>
+      </div>
+      <div style="width: 100%; height: 2px; background: rgba(12,32,54,0.16);">
+        <div id="sgw-bar" style="width: 100%; height: 100%; background: #0C2036; transform: scaleX(0); transform-origin: 0 50%; transition: transform 200ms linear;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="position: relative; z-index: 1;">
+
+    <section data-screen-label="Intro" style="min-height: 100vh; box-sizing: border-box; scroll-snap-align: start; padding: 0 clamp(32px, 4vw, 88px) 6vh var(--col);">
+      <div style="padding-top: 30vh; max-width: 640px;">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <span style="width: 28px; height: 1px; background: #C8A24B; flex-shrink: 0;"></span>
+          <span style="font: 600 max(12px, 1.4vh)/1 'Poppins', sans-serif; letter-spacing: 0.3em; color: rgba(14,14,14,0.65); white-space: nowrap; text-transform: uppercase;">Aaronz &amp; Co · Broker training</span>
+        </div>
+        <h1 style="font: 900 max(40px, 8vh)/0.98 'Archivo', sans-serif; letter-spacing: -0.025em; color: #0E0E0E; margin: 26px 0 0; text-transform: uppercase;">Personal <span style="color: #0C2036;">branding.</span></h1>
+        <p style="font: 500 max(18px, 2.6vh)/1.45 'Helvetica Neue', Helvetica, sans-serif; color: #0E0E0E; margin: 22px 0 0; text-wrap: pretty;">Building trust and building your own pipeline via social media.</p>
+        <p style="font: 400 max(15px, 2.1vh)/1.6 'Helvetica Neue', Helvetica, sans-serif; color: rgba(14,14,14,0.62); margin: 14px 0 0; text-wrap: pretty;">Four habits that turn a profile into a lead source — then four content styles to carry them.</p>
+        <div style="display: flex; align-items: center; gap: 16px; padding-top: 24px;">
+          <span style="font: 600 max(12px, 1.4vh)/1 'Poppins', sans-serif; letter-spacing: 0.28em; color: rgba(14,14,14,0.6);">SCROLL</span>
+          <span style="display: inline-block; width: 1px; height: 30px; background: rgba(14,14,14,0.45); animation: sgwCue 1.9s ease-in-out infinite;"></span>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="01 Pick your niche" style="min-height: 100vh; box-sizing: border-box; scroll-snap-align: start; padding: 0 clamp(32px, 4vw, 88px) 6vh var(--col);">
+      <div style="padding-top: 36vh; max-width: 640px;">
+        <div style="font: 900 max(46px, 8.6vh)/0.9 'Archivo', sans-serif; letter-spacing: -0.03em; color: rgba(12,32,54,0.14);">01</div>
+        <h2 style="font: 900 max(32px, 6.4vh)/1.02 'Archivo', sans-serif; letter-spacing: -0.02em; color: #0E0E0E; margin: 12px 0 0; text-transform: uppercase;">Pick your <span style="color: #0C2036;">niche.</span></h2>
+        <p style="font: 500 max(17px, 2.5vh)/1.42 'Helvetica Neue', Helvetica, sans-serif; color: #0E0E0E; margin: 18px 0 0;">Pick a community of investors or sellers you want to target — and become their go-to expert.</p>
+        <p style="font: 400 max(15px, 2.15vh)/1.6 'Helvetica Neue', Helvetica, sans-serif; color: rgba(14,14,14,0.62); margin: 14px 0 0; text-wrap: pretty;">One audience, owned properly, beats ten covered thinly. When they think of their next move, they should think of you first.</p>
+      </div>
+    </section>
+
+    <section data-screen-label="02 Stay on trend" style="min-height: 100vh; box-sizing: border-box; scroll-snap-align: start; padding: 0 clamp(32px, 4vw, 88px) 6vh var(--col);">
+      <div style="padding-top: 36vh; max-width: 640px;">
+        <div style="font: 900 max(46px, 8.6vh)/0.9 'Archivo', sans-serif; letter-spacing: -0.03em; color: rgba(12,32,54,0.14);">02</div>
+        <h2 style="font: 900 max(32px, 6.4vh)/1.02 'Archivo', sans-serif; letter-spacing: -0.02em; color: #0E0E0E; margin: 12px 0 0; text-transform: uppercase;">Stay on <span style="color: #0C2036;">trend.</span></h2>
+        <p style="font: 500 max(17px, 2.5vh)/1.42 'Helvetica Neue', Helvetica, sans-serif; color: #0E0E0E; margin: 18px 0 0;">Know which hooks and topics will stop the scroll.</p>
+        <p style="font: 400 max(15px, 2.15vh)/1.6 'Helvetica Neue', Helvetica, sans-serif; color: rgba(14,14,14,0.62); margin: 14px 0 0; text-wrap: pretty;">Watch what is working this week — formats, sounds, openers — and move while it is still moving. The first three seconds decide everything.</p>
+      </div>
+    </section>
+
+    <section data-screen-label="03 Stay consistent" style="min-height: 100vh; box-sizing: border-box; scroll-snap-align: start; padding: 0 clamp(32px, 4vw, 88px) 6vh var(--col);">
+      <div style="padding-top: 36vh; max-width: 640px;">
+        <div style="font: 900 max(46px, 8.6vh)/0.9 'Archivo', sans-serif; letter-spacing: -0.03em; color: rgba(12,32,54,0.14);">03</div>
+        <h2 style="font: 900 max(32px, 6.4vh)/1.02 'Archivo', sans-serif; letter-spacing: -0.02em; color: #0E0E0E; margin: 12px 0 0; text-transform: uppercase;">Stay <span style="color: #0C2036;">consistent.</span></h2>
+        <p style="font: 500 max(17px, 2.5vh)/1.42 'Helvetica Neue', Helvetica, sans-serif; color: #0E0E0E; margin: 18px 0 0;">It's a flywheel.</p>
+        <p style="font: 400 max(15px, 2.15vh)/1.6 'Helvetica Neue', Helvetica, sans-serif; color: rgba(14,14,14,0.62); margin: 14px 0 0; text-wrap: pretty;">The more you post, the more you're seen. The more you're seen, the more you're trusted. The more you're trusted, the more your pipeline fills on its own.</p>
+      </div>
+    </section>
+
+    <section data-screen-label="04 Value exchange" style="min-height: 100vh; box-sizing: border-box; scroll-snap-align: start; padding: 0 clamp(32px, 4vw, 88px) 6vh var(--col);">
+      <div style="padding-top: 36vh; max-width: 640px;">
+        <div style="font: 900 max(46px, 8.6vh)/0.9 'Archivo', sans-serif; letter-spacing: -0.03em; color: rgba(12,32,54,0.14);">04</div>
+        <h2 style="font: 900 max(32px, 6.4vh)/1.02 'Archivo', sans-serif; letter-spacing: -0.02em; color: #0E0E0E; margin: 12px 0 0; text-transform: uppercase;">Value <span style="color: #0C2036;">exchange.</span></h2>
+        <p style="font: 500 max(17px, 2.5vh)/1.42 'Helvetica Neue', Helvetica, sans-serif; color: #0E0E0E; margin: 18px 0 0;">This is about leads — feeding your pipeline with potential deals and clients.</p>
+        <p style="font: 400 max(15px, 2.15vh)/1.6 'Helvetica Neue', Helvetica, sans-serif; color: rgba(14,14,14,0.62); margin: 14px 0 0; text-wrap: pretty;">Use the internal tools you already have — guides, reports, market data — to give your audience a reason to reach out to you. Ending videos with a CTA is important.</p>
+      </div>
+    </section>
+
+    <section data-screen-label="Styles - Yapper" style="min-height: 100vh; box-sizing: border-box; scroll-snap-align: start; padding: 0 clamp(32px, 4vw, 88px) 6vh clamp(32px, 5vw, 96px);">
+      <div style="padding-top: 6vh; max-width: min(1360px, 100%);">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <span style="width: 28px; height: 1px; background: #C8A24B; flex-shrink: 0;"></span>
+          <span style="font: 600 max(12px, 1.4vh)/1 'Poppins', sans-serif; letter-spacing: 0.3em; color: rgba(14,14,14,0.65); white-space: nowrap; text-transform: uppercase;">Styles</span>
+        </div>
+        <h2 style="font: 900 max(32px, 6.4vh)/1.02 'Archivo', sans-serif; letter-spacing: -0.02em; color: #0E0E0E; margin: 20px 0 0; text-transform: uppercase;">The <span style="color: #0C2036;">yapper.</span></h2>
+        <p style="font: 500 max(16px, 2.3vh)/1.42 'Helvetica Neue', Helvetica, sans-serif; color: #0E0E0E; margin: 14px 0 0;">Straight to camera. Personality first.</p>
+        <div style="display: flex; gap: clamp(14px, 1.8vw, 30px); margin-top: 30px; align-items: flex-start;">
+          <div style="flex: 0 0 auto; height: clamp(280px, 72vh, 760px); border: 2px solid #0C2036; border-radius: 26px; position: relative; padding: 6px; box-sizing: border-box; background: rgba(12,32,54,0.04);">
+            <div style="position: absolute; top: 14px; left: 50%; transform: translateX(-50%); width: 24%; height: 7px; border-radius: 999px; background: #0C2036; z-index: 3;"></div>
+            <div style="position: relative; height: 100%; width: auto; aspect-ratio: 9 / 16; border-radius: 21px; overflow: hidden; background: #0C2036;">
+              <video class="sgw-clip" src="clips/yapper-1.mp4" autoplay muted loop playsinline preload="auto"
+                     aria-label="Broker to camera on Dubai transaction volumes"
+                     style="width: 100%; height: 100%; object-fit: cover; display: block;"></video>
+              <button class="sgw-audio" type="button" data-on="0" aria-pressed="false" aria-label="Unmute this clip">
+                <svg class="off" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+                <svg class="on" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+              </button>
+            </div>
+          </div>
+          <div style="flex: 0 0 auto; height: clamp(280px, 72vh, 760px); border: 2px solid #0C2036; border-radius: 26px; position: relative; padding: 6px; box-sizing: border-box; background: rgba(12,32,54,0.04);">
+            <div style="position: absolute; top: 14px; left: 50%; transform: translateX(-50%); width: 24%; height: 7px; border-radius: 999px; background: #0C2036; z-index: 3;"></div>
+            <div style="position: relative; height: 100%; width: auto; aspect-ratio: 9 / 16; border-radius: 21px; overflow: hidden; background: #0C2036;">
+              <video class="sgw-clip" src="clips/yapper-2.mp4" autoplay muted loop playsinline preload="auto"
+                     aria-label="Broker to camera on posting price declines"
+                     style="width: 100%; height: 100%; object-fit: cover; display: block;"></video>
+              <button class="sgw-audio" type="button" data-on="0" aria-pressed="false" aria-label="Unmute this clip">
+                <svg class="off" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+                <svg class="on" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+              </button>
+            </div>
+          </div>
+          <div style="flex: 0 0 auto; height: clamp(280px, 72vh, 760px); border: 2px solid #0C2036; border-radius: 26px; position: relative; padding: 6px; box-sizing: border-box; background: rgba(12,32,54,0.04);">
+            <div style="position: absolute; top: 14px; left: 50%; transform: translateX(-50%); width: 24%; height: 7px; border-radius: 999px; background: #0C2036; z-index: 3;"></div>
+            <div style="position: relative; height: 100%; width: auto; aspect-ratio: 9 / 16; border-radius: 21px; overflow: hidden; background: #0C2036;">
+              <video class="sgw-clip" src="clips/yapper-3.mp4" autoplay muted loop playsinline preload="auto"
+                     aria-label="Broker to camera, piece direct to lens"
+                     style="width: 100%; height: 100%; object-fit: cover; display: block;"></video>
+              <button class="sgw-audio" type="button" data-on="0" aria-pressed="false" aria-label="Unmute this clip">
+                <svg class="off" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+                <svg class="on" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="Styles - Data driven" style="min-height: 100vh; box-sizing: border-box; scroll-snap-align: start; padding: 0 clamp(32px, 4vw, 88px) 6vh clamp(32px, 5vw, 96px);">
+      <div style="padding-top: 36vh; max-width: 640px;">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <span style="width: 28px; height: 1px; background: #C8A24B; flex-shrink: 0;"></span>
+          <span style="font: 600 max(12px, 1.4vh)/1 'Poppins', sans-serif; letter-spacing: 0.3em; color: rgba(14,14,14,0.65); white-space: nowrap; text-transform: uppercase;">Styles</span>
+        </div>
+        <h2 style="font: 900 max(32px, 6.4vh)/1.02 'Archivo', sans-serif; letter-spacing: -0.02em; color: #0E0E0E; margin: 20px 0 0; text-transform: uppercase;">Data <span style="color: #0C2036;">driven.</span></h2>
+        <p style="font: 500 max(17px, 2.5vh)/1.42 'Helvetica Neue', Helvetica, sans-serif; color: #0E0E0E; margin: 18px 0 0;">Let the numbers make the argument.</p>
+        <p style="font: 400 max(15px, 2.15vh)/1.6 'Helvetica Neue', Helvetica, sans-serif; color: rgba(14,14,14,0.62); margin: 14px 0 0; text-wrap: pretty;">Transactions, yields, price per square foot, off-plan versus ready. Investors follow the broker who reads the market out loud — a sharp take on this week's numbers positions you as the analyst, not the salesman.</p>
+      </div>
+    </section>
+
+    <section data-screen-label="Styles - The educator" style="min-height: 100vh; box-sizing: border-box; scroll-snap-align: start; padding: 0 clamp(32px, 4vw, 88px) 6vh clamp(32px, 5vw, 96px);">
+      <div style="padding-top: 36vh; max-width: 640px;">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <span style="width: 28px; height: 1px; background: #C8A24B; flex-shrink: 0;"></span>
+          <span style="font: 600 max(12px, 1.4vh)/1 'Poppins', sans-serif; letter-spacing: 0.3em; color: rgba(14,14,14,0.65); white-space: nowrap; text-transform: uppercase;">Styles</span>
+        </div>
+        <h2 style="font: 900 max(32px, 6.4vh)/1.02 'Archivo', sans-serif; letter-spacing: -0.02em; color: #0E0E0E; margin: 20px 0 0; text-transform: uppercase;">The <span style="color: #0C2036;">educator.</span></h2>
+        <p style="font: 500 max(17px, 2.5vh)/1.42 'Helvetica Neue', Helvetica, sans-serif; color: #0E0E0E; margin: 18px 0 0;">Answer the questions buyers are already asking.</p>
+        <p style="font: 400 max(15px, 2.15vh)/1.6 'Helvetica Neue', Helvetica, sans-serif; color: rgba(14,14,14,0.62); margin: 14px 0 0; text-wrap: pretty;">Golden Visa rules, payment plans, service charges, handover checklists, where the new metro line lands. Evergreen, searchable, endlessly shareable — and it pairs naturally with your guides and reports as the CTA.</p>
+      </div>
+    </section>
+
+    <section data-screen-label="Styles - Day in the life" style="min-height: 100vh; box-sizing: border-box; scroll-snap-align: start; padding: 0 clamp(32px, 4vw, 88px) 6vh clamp(32px, 5vw, 96px);">
+      <div style="padding-top: 32vh; max-width: 640px;">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <span style="width: 28px; height: 1px; background: #C8A24B; flex-shrink: 0;"></span>
+          <span style="font: 600 max(12px, 1.4vh)/1 'Poppins', sans-serif; letter-spacing: 0.3em; color: rgba(14,14,14,0.65); white-space: nowrap; text-transform: uppercase;">Styles</span>
+        </div>
+        <h2 style="font: 900 max(32px, 6.4vh)/1.02 'Archivo', sans-serif; letter-spacing: -0.02em; color: #0E0E0E; margin: 20px 0 0; text-transform: uppercase;">Day in the <span style="color: #0C2036;">life.</span></h2>
+        <p style="font: 500 max(17px, 2.5vh)/1.42 'Helvetica Neue', Helvetica, sans-serif; color: #0E0E0E; margin: 18px 0 0;">Show the work behind the deals.</p>
+        <p style="font: 400 max(15px, 2.15vh)/1.6 'Helvetica Neue', Helvetica, sans-serif; color: rgba(14,14,14,0.62); margin: 14px 0 0; text-wrap: pretty;">Viewings, valuations, the 7am call, the handover keys. Familiarity builds trust faster than any listing — people reach out to the broker they feel they already know.</p>
+        <div style="margin-top: 5vh; padding-top: 22px; border-top: 1px solid rgba(12,32,54,0.2);">
+          <p style="font: 400 italic max(14px, 2vh)/1.6 'Playfair Display', Georgia, serif; color: rgba(14,14,14,0.7); margin: 0; text-wrap: pretty;">These styles are suggestions — you're encouraged to implement any of them when and where you see fit.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+<script>
+(function(){
+  var el = document.getElementById('sgw-scroll');
+  var bases = [315, 45, 225, 135], perStep = 90, dim = 0.5, queued = false;
+  function tick(){
+    queued = false;
+    var h = el.clientHeight || 1;
+    var secs = el.querySelectorAll('section');
+    var stops = Math.max(1, secs.length - 1);
+    var idx = 0, near = 1e9;
+    for (var i = 0; i < secs.length; i++){
+      var d = Math.abs(secs[i].getBoundingClientRect().top);
+      if (d < near){ near = d; idx = i; }
+    }
+    var p = Math.max(0, Math.min(stops - 1, idx - 1));
+    var rot = p * perStep;
+    var wheel = document.getElementById('sgw-wheel');
+    if (wheel) wheel.style.transform = 'translate(-50%, -50%) rotate(' + rot + 'deg)';
+    for (var i = 0; i < 4; i++){
+      var im = document.getElementById('sgw-img-' + i);
+      if (im) im.style.transform = 'rotate(' + (-rot) + 'deg)';
+    }
+    var bar = document.getElementById('sgw-bar');
+    if (bar){
+      var total = (el.scrollHeight - h) || 1;
+      bar.style.transform = 'scaleX(' + Math.max(0, Math.min(1, el.scrollTop / total)) + ')';
+    }
+    var active = 0, best = 1e9;
+    for (var i = 0; i < 4; i++){
+      var a = ((bases[i] + rot - 135) % 360 + 360) % 360;
+      if (a > 180) a -= 360;
+      if (Math.abs(a) < best){ best = Math.abs(a); active = i; }
+    }
+    for (var i = 0; i < 4; i++){
+      var v = document.getElementById('sgw-veil-' + i);
+      if (v) v.style.opacity = i === active ? '0' : String(dim);
+    }
+    // Styles starts at section 5. Driven off the same nearest-section index
+    // the wheel rotation uses, so the art leaves on the very scroll that
+    // brings the first Styles screen up rather than a beat behind it.
+    var art = document.getElementById('sgw-art');
+    if (art) art.classList.toggle('gone', idx >= 5);
+
+    var step = Math.max(0, Math.min(stops - 1, Math.round(p)));
+    var label = document.getElementById('sgw-step');
+    if (label) label.textContent = (step + 1 < 10 ? '0' : '') + (step + 1);
+  }
+  el.addEventListener('scroll', function(){ if (!queued){ queued = true; requestAnimationFrame(tick); } }, { passive: true });
+  window.addEventListener('resize', tick);
+  tick();
+})();
+
+/**
+ * Yapper clips: all three play on load, and exactly one may be audible.
+ *
+ * Autoplay is only permitted while muted — every browser blocks a video that
+ * starts making noise at somebody — so the clips begin muted and the button is
+ * the user's way in. Unmuting one mutes the other two rather than letting
+ * three people talk over each other, and pressing the lit button again turns
+ * it off. play() is re-issued on unmute because a tab that throttled a muted
+ * background video will otherwise stay paused with the sound now on.
+ */
+(function(){
+  var vids = [].slice.call(document.querySelectorAll('.sgw-clip'));
+  var btns = [].slice.call(document.querySelectorAll('.sgw-audio'));
+  var kick = function(v){ var p = v.play(); if (p && p.catch) p.catch(function(){}); };
+
+  vids.forEach(kick);
+
+  function silence(){
+    vids.forEach(function(v, i){
+      v.muted = true;
+      btns[i].setAttribute('data-on', '0');
+      btns[i].setAttribute('aria-pressed', 'false');
+      btns[i].setAttribute('aria-label', 'Unmute this clip');
+    });
+  }
+
+  btns.forEach(function(btn, i){
+    btn.addEventListener('click', function(){
+      var wasOff = vids[i].muted;
+      silence();
+      if (!wasOff) return;              // it was the live one: this click turns it off
+      vids[i].muted = false;
+      vids[i].volume = 1;
+      btn.setAttribute('data-on', '1');
+      btn.setAttribute('aria-pressed', 'true');
+      btn.setAttribute('aria-label', 'Mute this clip');
+      kick(vids[i]);
+    });
+  });
+})();
+</script>
+</body>
+</html>

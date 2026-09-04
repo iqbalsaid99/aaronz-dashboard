@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aaronz &amp; Co. Dashboard — architecture brief</title>
+<style>
+  :root {
+    --bg: #f8fafc; --panel: #ffffff; --ink: #0f172a; --muted: #475569;
+    --line: #e2e8f0; --accent: #4f46e5; --code-bg: #f1f5f9;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0b1120; --panel: #111a2e; --ink: #e2e8f0; --muted: #94a3b8;
+      --line: #1e293b; --accent: #818cf8; --code-bg: #1e293b;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  main {
+    max-width: 62rem; margin: 0 auto; padding: 3rem 1.5rem 6rem;
+  }
+  h1 {
+    font-size: 2.1rem; line-height: 1.2; letter-spacing: -0.02em;
+    margin: 0 0 1.5rem; font-weight: 700;
+  }
+  h2 {
+    font-size: 1.4rem; letter-spacing: -0.01em; margin: 3rem 0 1rem;
+    padding-bottom: .5rem; border-bottom: 2px solid var(--line); font-weight: 650;
+  }
+  h3 { font-size: 1.1rem; margin: 2rem 0 .75rem; font-weight: 650; }
+  p { margin: 0 0 1rem; color: var(--muted); }
+  strong { color: var(--ink); font-weight: 650; }
+  hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
+  ul, ol { margin: 0 0 1rem; padding-left: 1.4rem; color: var(--muted); }
+  li { margin: .35rem 0; }
+  li > ul, li > ol { margin: .35rem 0; }
+  code {
+    background: var(--code-bg); color: var(--ink);
+    padding: .12em .4em; border-radius: 5px; font-size: .875em;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .tw { overflow-x: auto; margin: 0 0 1.5rem; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+  table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+  th, td { text-align: left; padding: .7rem .9rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-weight: 650; color: var(--ink); background: var(--code-bg); white-space: nowrap; }
+  tbody tr:last-child td { border-bottom: 0; }
+  td { color: var(--muted); }
+  td:first-child { color: var(--ink); }
+</style></head>
+<body><main>
+<h1>Aaronz &amp; Co. Dashboard — architecture brief</h1>
+<p>Context for advising on a migration to a hosted, multi-tenant deployment (Cloudflare or similar) supporting ~100 users: brokers, line managers, admins.</p>
+<hr>
+<h2>1. What it is today</h2>
+<p>A <strong>single-page React app with no backend and no database.</strong> It runs only via <code>npm run dev</code> on one person's laptop.</p>
+<div class="tw"><table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td>Framework</td><td>React 18.3 (no router — tab state is a single <code>useState</code>)</td></tr><tr><td>Build</td><td>Vite 5, Tailwind 3, <code>lucide-react</code> icons</td></tr><tr><td>Total deps</td><td>3 runtime packages: <code>react</code>, <code>react-dom</code>, <code>lucide-react</code></td></tr><tr><td>Source size</td><td>~7,600 lines across 22 files in <code>src/</code></td></tr><tr><td>Auth</td><td><strong>None.</strong> No login, no accounts, no roles, no sessions</td></tr><tr><td>Database</td><td><strong>None.</strong> Persistent state is <code>localStorage</code> per browser</td></tr><tr><td>Server</td><td><strong>None in production.</strong> See §2 — this is the critical fact</td></tr><tr><td>Hosting</td><td>Localhost only, port 5173</td></tr></tbody></table></div>
+<hr>
+<h2>2. The API proxies — and why the production build is currently broken</h2>
+<p><code>vite.config.js</code> (305 lines) defines <strong>three Vite dev-server middlewares</strong>. These do the OAuth token exchange in Node so the client secrets never enter the browser bundle, and so the browser never hits a cross-origin host (no CORS).</p>
+<div class="tw"><table><thead><tr><th>Route</th><th>Upstream</th><th>Auth flow</th></tr></thead><tbody><tr><td><code>/ps/*</code></td><td><code>api.propspace.com</code> (the CRM)</td><td>OAuth2 client_credentials → Bearer. Token cached in memory, ~1h TTL, refreshed 60s early</td></tr><tr><td><code>/pf/*</code></td><td><code>atlas.propertyfinder.com</code></td><td>HTTP Basic <code>key:secret</code> → JWT at <code>auth.propertyfinder.com</code>, then Bearer. ~30 min TTL (1784s)</td></tr><tr><td><code>/api/lookup</code></td><td><code>api.apify.com</code> (owner-search scraper)</td><td>Token in query string, <code>run-sync-get-dataset-items</code>, 180s timeout</td></tr></tbody></table></div>
+<p>Both token flows use a <strong>single-flight promise cache</strong> — concurrent callers await one exchange instead of each starting their own. This was added deliberately: the front end fetches 4 pages at a time, and four simultaneous cold-start token requests were tripping the upstream WAF.</p>
+<p><strong><code>configureServer</code> only runs under <code>vite dev</code>.</strong> <code>npm run build</code> emits a static <code>dist/</code> with no proxies at all, so <strong>the current production build cannot fetch any data.</strong> Any migration must reimplement these three proxies as real server endpoints — the README already anticipates a Cloudflare Worker, and the front end wouldn't change beyond a base URL.</p>
+<p><strong>Secrets currently in <code>.env</code></strong> (deliberately <em>not</em> <code>VITE_</code>-prefixed so they stay in Node): <code>PROPSPACE_CLIENT_ID/SECRET</code>, <code>PROPERTYFINDER_API_KEY/SECRET</code>, <code>APIFY_TOKEN</code>, <code>APIFY_ACTOR_ID</code>, <code>APIFY_PROXY_GROUP</code>, <code>APIFY_CONTACT_DETAILS</code>.</p>
+<hr>
+<h2>3. Screens built</h2>
+<p>Left rail, in order. <strong>Live</strong> = working against real data. <strong>Stub</strong> = nav item exists, no screen behind it.</p>
+<div class="tw"><table><thead><tr><th>Screen</th><th>State</th><th>Notes</th></tr></thead><tbody><tr><td><strong>Insights</strong> (<code>App.jsx</code>, 683 ln)</td><td>Live</td><td>Lead performance. KPI cards, status breakdown, per-agent sortable table, drill-down side panel per agent</td></tr><tr><td><strong>Brokers</strong> (<code>Brokers.jsx</code>, 893 ln + <code>brokers.js</code>, 446 ln)</td><td>Live</td><td>One profile per broker: leads, listing book, derived viewings, manual billings</td></tr><tr><td><strong>Lead pool</strong></td><td>Stub</td><td>—</td></tr><tr><td><strong>Contacts</strong></td><td>Stub</td><td>—</td></tr><tr><td><strong>Owner search</strong> (<code>OwnerSearch.jsx</code>, 291 ln)</td><td>Live, unverified</td><td>Paste a Bayut / PropertyFinder / Dubizzle URL → Apify scrape → contact details. Field mapping is guesswork; no Apify token has ever run against it</td></tr><tr><td><strong>Property Finder</strong> (<code>PropertyFinder.jsx</code>, 1,608 ln + <code>propertyfinder.js</code>, 502 ln)</td><td>Live</td><td>Largest single screen. 6 sub-views: Overview, Listings, Leads, Agents, Quality, Credits. Includes an action list (unverified live listings, quality &lt; 60, expiring featured/premium, expiring verifications, expired BRN, unanswered leads)</td></tr><tr><td><strong>Listings</strong> (<code>Listings.jsx</code>, 663 ln + <code>listings.js</code>, 333 ln)</td><td>Live</td><td>New-listings-per-month, current book, agent attribution</td></tr><tr><td><strong>Equipment</strong> (<code>Equipment.jsx</code>, 282 ln)</td><td>Live, <strong>local only</strong></td><td>27-asset register, book-out / book-in. See §5</td></tr><tr><td><strong>Deals</strong></td><td>Stub</td><td>Blocked — no API endpoint (§4)</td></tr><tr><td><strong>Off-plan</strong> (<code>OffPlan.jsx</code>, 220 ln)</td><td>Live</td><td>Off-plan stock via <code>completion_status</code> filter on <code>/listings</code></td></tr><tr><td><strong>Campaigns</strong></td><td>Stub</td><td>—</td></tr><tr><td><strong>Database</strong> (<code>Database.jsx</code>, 219 ln)</td><td>Live</td><td>Tilal Al Ghaf 2026 owner datasheet: 4,204 rows, 3,215 units, 3,775 owners, with phone/WhatsApp/copy</td></tr><tr><td><strong>Settings</strong></td><td>Stub</td><td>—</td></tr></tbody></table></div>
+<hr>
+<h2>4. Hard API constraints already discovered (do not re-litigate these)</h2>
+<p>All verified by live probing against the account, and documented in code comments. They shape any caching or backend design.</p>
+<p><strong>PropSpace CRM</strong></p>
+<ul><li><strong>There is no working server-side date filter on <code>/leads</code>.</strong> <code>date_created_from/to</code> → 400. <code>date_of_enquiry</code> is accepted and <em>silently ignored</em>, returning all ~41,000 leads. The only workaround: results are strictly newest-first by <code>created_at</code>, <code>per_page</code> caps at 100, so the client pages from the top and stops when it crosses the cutoff. <strong>~7 pages for a 30-day window, ~1.5s per request, 4 requests in flight at a time.</strong></li><li>Pages are numbered, not cursored — a lead arriving mid-pull shifts every row, so results are deduped by <code>id</code>.</li><li><code>/listings</code> defaults to <code>status=published</code> (352 records). Full history needs explicit status queries: <code>unpublished</code> 9,613, <code>draft</code> 935, <code>pending_approval</code> 545.</li><li><strong>403 on everything transactional</strong>: <code>/viewings</code>, <code>/appointments</code>, <code>/activities</code>, <code>/calendar</code>, <code>/events</code>, <code>/tasks</code>, <code>/deals</code>, <code>/transactions</code>, <code>/commissions</code>, <code>/invoices</code>, <code>/payments</code>, <code>/offers</code>, <code>/contracts</code>, <code>/sales</code>, <code>/lettings</code>. The WAF returns the same 403 for nonexistent paths, so it means "not on this key" rather than "blocked".</li><li>Consequence: <strong>viewings are reverse-engineered by regex-parsing free-text note bodies</strong> into five confidence tiers (confirmed / done / booked / intent / mentioned). <strong>Billings are typed in by hand.</strong></li><li>Identity is messy: leads carry first names only ("Dennis"), listings carry full names ("Dennis Manalo"). Joined on numeric agent id; brokers with no id fall back to a lowercased-name key.</li><li>Agent photos and job titles exist <strong>only</strong> on listing agent records (<code>photo_url</code>, 130×130 — <code>photo_url_original</code> is 403), joined to leads by id.</li><li>The CRM escapes apostrophes as <code>#sqoute#</code> in note text.</li></ul>
+<p><strong>Property Finder Enterprise API</strong></p>
+<ul><li><code>/v1/leads</code> will not return anything older than <strong>90 days</strong> (422 beyond) — the range picker is capped to match.</li><li><code>perPage</code> caps differ per resource: 50 on leads and verifications, 100 elsewhere. Exceeding it is a 400, not a clamp.</li><li><strong>Unknown query parameters are silently ignored</strong> — a nonexistent filter looks like a filter that matched everything.</li><li><code>/v1/locations</code> only honours <code>search</code>; there is no id → name lookup. Names are learned opportunistically from search results and cached.</li><li>The account's own set is small (288 listings, 142 live), so listings, users and stats are fetched whole and filtered in memory.</li></ul>
+<p><strong>Timezone</strong></p>
+<ul><li>Everything is computed in <strong>Asia/Dubai</strong> calendar days (<code>time.js</code>, <code>dubaiRange</code>), not UTC — an enquiry at 01:00 local carries the previous UTC date and would land in the wrong day otherwise.</li></ul>
+<hr>
+<h2>5. State that must move to a real database</h2>
+<p>This is the core of the multi-user problem. Everything below is currently <strong>per-browser <code>localStorage</code></strong>, invisible to anyone else.</p>
+<div class="tw"><table><thead><tr><th>Key</th><th>What</th><th>Why it breaks at scale</th></tr></thead><tbody><tr><td><code>aaronz.equipment.bookings.v1</code></td><td>Camera/laptop book-outs</td><td>A camera booked out on one laptop still reads "In Office" on everyone else's. Already flagged in code as "a personal record, not a shared register — needs a backend"</td></tr><tr><td><code>aaronz.equipment.user.v1</code></td><td>Who you say you are</td><td>There is no login, so the user <strong>picks their own name</strong> from the CRM agent roster. Nothing stops anyone selecting someone else's</td></tr><tr><td><code>aaronz.billings.local.v1</code></td><td>Hand-keyed broker billing figures</td><td>Per-browser, so two managers see different revenue numbers</td></tr><tr><td><code>aaronz.pf.locations</code></td><td>PF location id → name cache</td><td>Harmless; could stay client-side</td></tr></tbody></table></div>
+<p><strong>Bundled / static files that are really data:</strong></p>
+<ul><li><code>src/assets-register.json</code> — 27 assets, transcribed from <code>Asset_Register.xlsx</code></li><li><code>src/billings.json</code> — empty scaffold (<code>{ currency: "AED", brokers: [] }</code>), intended to be filled from a spreadsheet</li><li><code>public/data/tilal-al-ghaf-2026.json</code> — <strong>782 KB</strong>, served from <code>public/</code> rather than bundled precisely so it isn't downloaded by everyone who opens the dashboard</li></ul>
+<hr>
+<h2>6. The metric definitions (business logic worth preserving)</h2>
+<p>The dashboard exists to answer one question: <em>who is actually working leads, not just who says they are.</em></p>
+<ul><li><strong>Status is self-reported</strong> — anyone can flip a lead to "Contacted" without picking up the phone. So status alone is not trusted.</li><li><strong>First touch</strong> is derived from the <code>notes[]</code> array, which carries <code>date</code> and <code>user_name</code> — the only field that proves a human did something. Deliberately <strong>not</strong> <code>last_updated</code>, which bumps on any field edit or automation.</li><li>Leads are bucketed into three mutually exclusive states:<ul><li><strong>Cold</strong> — status never moved <em>and</em> no note. The only bucket that counts against anyone.</li><li><strong>Status-only</strong> — worked but nothing written down. A record-keeping gap.</li><li><strong>Noted</strong> — a real logged touch.</li></ul></li><li><code>NOT_CONTACTED</code> is derived, not hard-coded: any sub-status <em>other than</em> the five system defaults ("Not yet contacted", the three "…to Agent" routing states the CRM sets itself, and "Not Specified") counts as worked. This means a new sub-status added in the CRM is picked up automatically.</li><li><strong>"Worked %" is a compliance measure</strong> — brokers are ranked on the rate with no volume threshold. Ties break on lead count so a 100% rate off two leads doesn't outrank 90% off a hundred.</li></ul>
+<hr>
+<h2>7. What the migration has to solve</h2>
+<p>Stated plainly, for whoever advises on the target architecture:</p>
+<ol><li><strong>Reimplement the three dev-server proxies as real server endpoints.</strong> The front end is already written against <code>/ps</code>, <code>/pf</code>, <code>/api/lookup</code> — only the base URL changes.</li><li><strong>Add authentication and identity.</strong> There is currently none. Users self-select their name from a dropdown.</li><li><strong>Add roles.</strong> Broker (own numbers only), line manager (their team), admin (everything). No data scoping exists today — every screen shows the whole company.</li><li><strong>Add a shared database</strong> for equipment bookings, billings, and any future editable state.</li><li><strong>Solve the fan-out problem.</strong> Today one browser pages the entire CRM lead history itself on every load — ~7 sequential-ish rounds of 4 concurrent requests at ~1.5s each, for a 30-day window. With 100 users doing that independently against <strong>one shared OAuth client credential</strong>, the CRM API and its WAF become the bottleneck, not the app. This almost certainly needs a scheduled server-side sync into own storage, with the UI reading from that rather than proxying live.</li><li><strong>Decide what happens to the 782 KB owner datasheet</strong> and other static extracts once there is a real database behind them.</li><li><strong>Fill in the stub screens</strong>: Lead pool, Contacts, Campaigns, Settings. Deals stays blocked until a billing data source exists.</li></ol>
+</main></body></html>

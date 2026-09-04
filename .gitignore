@@ -1,0 +1,9 @@
+.env.local
+node_modules
+.env
+dist
+Tilal al Ghaf 2026.xlsx
+tilal-al-ghaf-2026.json
+.dev.vars
+.wrangler
+test/.pdf-under-test.mjs

@@ -1,0 +1,21 @@
+# The CRM sync Worker. Deployed separately from the Pages project:
+#
+#   cd workers/crm-sync
+#   npx wrangler deploy
+#   npx wrangler secret put PROPSPACE_CLIENT_ID
+#   npx wrangler secret put PROPSPACE_CLIENT_SECRET
+#   npx wrangler secret put SUPABASE_URL
+#   npx wrangler secret put SUPABASE_SERVICE_ROLE_KEY
+#
+# Two crons, one Worker. Which tier runs is decided from the schedule that
+# fired, so there is one deployment and one set of secrets rather than two of
+# each drifting apart.
+name = "aaronz-crm-sync"
+main = "index.js"
+compatibility_date = "2026-08-31"
+
+[triggers]
+# */10 — new leads only, by created_at. Costs about one page.
+# */30 — pages 1-30 re-pulled unconditionally, to catch UPDATES, which a
+#        created_at ordering can never surface on its own.
+crons = ["*/10 * * * *", "*/30 * * * *"]

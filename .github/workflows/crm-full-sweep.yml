@@ -1,0 +1,79 @@
+# Tier 3: the nightly full reconciliation.
+#
+# NOT A WORKER, ON PURPOSE. The leads book is 431 pages. A Cloudflare Worker
+# has a per-invocation subrequest cap, so doing this there means chunking the
+# sweep across invocations and carrying a resume cursor between them — machinery
+# whose only purpose is to work around the platform. A GitHub runner has no such
+# cap, so the Stage 2 backfill script runs here unmodified.
+#
+# WHY A FULL SWEEP IS NEEDED AT ALL. The ten-minute tier sees new leads and the
+# thirty-minute tier re-reads the first 30 pages, so anything that changes
+# deeper than page 30 — a lead from April that got a note today — is invisible
+# to both. This is what catches it.
+#
+# Secrets required on the repository:
+#   PROPSPACE_CLIENT_ID, PROPSPACE_CLIENT_SECRET,
+#   SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
+
+name: CRM full sweep
+
+on:
+  schedule:
+    # 02:20 UTC = 06:20 Dubai — after the book has settled and well before
+    # anyone opens the dashboard. Not on the hour: scheduled jobs cluster there
+    # and GitHub delays them under load.
+    - cron: '20 2 * * *'
+  workflow_dispatch:
+    inputs:
+      sources:
+        description: 'Sources to sweep (space separated), or blank for all'
+        required: false
+        default: ''
+      restart:
+        description: 'Ignore the checkpoint and start from page 1'
+        type: boolean
+        default: false
+
+# One sweep at a time. Two overlapping runs would double every request against
+# an API that already rate-limits this account, for no extra coverage.
+concurrency:
+  group: crm-full-sweep
+  cancel-in-progress: false
+
+jobs:
+  sweep:
+    runs-on: ubuntu-latest
+    # The leads book alone is ~431 pages at a few seconds each. The default
+    # 360-minute cap would let a wedged run burn the day's minutes.
+    timeout-minutes: 90
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # No install step: the script has no dependencies, by design. It reads
+      # its configuration from the environment, so the secrets below are picked
+      # up without a .env file ever existing on the runner.
+      - name: Full sweep
+        env:
+          PROPSPACE_CLIENT_ID: ${{ secrets.PROPSPACE_CLIENT_ID }}
+          PROPSPACE_CLIENT_SECRET: ${{ secrets.PROPSPACE_CLIENT_SECRET }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          node scripts/backfill.mjs \
+            ${{ github.event.inputs.sources }} \
+            ${{ github.event.inputs.restart == 'true' && '--restart' || '' }}
+
+      # The script already writes last_error to sync_state and leaves the
+      # watermarks alone on failure, so the mirror is never left claiming a
+      # sweep it did not finish. This only makes the failure visible in GitHub
+      # as well, for anyone not watching the dashboard.
+      - name: Report failure
+        if: failure()
+        run: |
+          echo "::error::CRM full sweep failed — sync_state.last_error carries the reason."
+          exit 1
