@@ -29,6 +29,39 @@ import {
 const AUTH = 'https://api.propspace.com/auth/token';
 const API = 'https://api.propspace.com';
 
+/**
+ * PropSpace sits behind "Talsion IronWall", and like the Property Finder /
+ * CloudFront pairing, it rejects requests with no User-Agent before they ever
+ * reach the application. Workers send none by default — unlike Node, whose
+ * fetch sets one — which is why this proxy works from a laptop (`vite.config.js`
+ * runs under Node) and came back 502 from the edge, with a 403 HTML challenge
+ * page arriving in place of the token response.
+ *
+ * Sent on every hop: the auth exchange and the forwarded API call. These are
+ * our own account's credentialled requests, so this is about getting past a
+ * bot rule, not disguising anything.
+ */
+const REQUEST_HEADERS = {
+  'User-Agent':
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 ' +
+    '(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+  Accept: 'application/json',
+};
+
+/**
+ * A WAF block arrives as an HTML page, not JSON — dumping the whole IronWall
+ * error document into an error field (as raw text used to) tells nobody
+ * anything actionable. Detected by content type, falling back to sniffing the
+ * first character, because the WAF does not always label what it returns.
+ */
+const looksLikeHtml = (res, text) =>
+  (res.headers.get('content-type') ?? '').includes('text/html') || /^\s*</.test(text);
+
+const BLOCKED =
+  "Blocked by PropSpace's firewall (Talsion IronWall). The request was " +
+  'rejected before reaching their API, so this is not an authentication ' +
+  'problem and the credentials are probably fine.';
+
 let token = null;
 let expiresAt = 0;
 let inFlight = null;
@@ -52,7 +85,7 @@ async function exchange(env) {
 
   const res = await fetch(AUTH, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { ...REQUEST_HEADERS, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       grant_type: 'client_credentials',
       client_id: env.PROPSPACE_CLIENT_ID,
@@ -61,7 +94,11 @@ async function exchange(env) {
   });
 
   if (!res.ok) {
-    throw new Error(`auth failed ${res.status}: ${await res.text()}`);
+    const text = await res.text();
+    if (looksLikeHtml(res, text)) {
+      throw new Error(`${BLOCKED} (auth hop, HTTP ${res.status})`);
+    }
+    throw new Error(`auth failed ${res.status}: ${text.slice(0, 300)}`);
   }
 
   const data = await res.json();
@@ -176,7 +213,7 @@ export async function onRequest(context) {
     if (text === null) {
       const t = await getToken(env);
       let upstream = await fetch(target, {
-        headers: { Authorization: `Bearer ${t}`, Accept: 'application/json' },
+        headers: { ...REQUEST_HEADERS, Authorization: `Bearer ${t}` },
       });
 
       // A 401 here means the cached token went stale earlier than its stated
@@ -187,15 +224,18 @@ export async function onRequest(context) {
         token = null;
         expiresAt = 0;
         upstream = await fetch(target, {
-          headers: {
-            Authorization: `Bearer ${await getToken(env)}`,
-            Accept: 'application/json',
-          },
+          headers: { ...REQUEST_HEADERS, Authorization: `Bearer ${await getToken(env)}` },
         });
       }
 
       text = await upstream.text();
       status = upstream.status;
+
+      // The WAF can block this hop too, not just auth. Passing its HTML
+      // through would hand the client a page where it expects JSON.
+      if (!upstream.ok && looksLikeHtml(upstream, text)) {
+        return json({ error: `${BLOCKED} (HTTP ${upstream.status})` }, 502);
+      }
 
       // Errors are passed through untouched — there is nothing to scope, and
       // rewriting them would hide what upstream actually said. Never cached:
@@ -250,6 +290,10 @@ export async function onRequest(context) {
 
     return json(filtered, status, headers);
   } catch (err) {
+    // Logged as well as returned — otherwise an edge failure like a WAF block
+    // is invisible in `wrangler pages deployment tail`, the one place you look
+    // when it works locally and not in production.
+    console.error('[propspace]', path, String(err.message ?? err));
     return json({ error: String(err.message ?? err) }, 502);
   }
 }
