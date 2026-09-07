@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { getSupabaseConfig } from '../functions/_lib/env.js';
 import { isValidSession } from '../functions/_lib/session.js';
 
 /**
@@ -100,6 +101,24 @@ test('a failure is never cached', async () => {
   try {
     assert.deepEqual(await isValidSession(token, env), { id: 'user-4' });
   } finally { f.restore(); }
+});
+
+test('Supabase env settings accept both Pages and public variable names', () => {
+  assert.deepEqual(getSupabaseConfig({
+    NEXT_PUBLIC_SUPABASE_URL: 'https://next.example.supabase.co',
+    NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: 'next-key',
+  }), {
+    url: 'https://next.example.supabase.co',
+    anonKey: 'next-key',
+  });
+
+  assert.deepEqual(getSupabaseConfig({
+    SUPABASE_URL: 'https://pages.example.supabase.co',
+    SUPABASE_ANON_KEY: 'pages-key',
+  }), {
+    url: 'https://pages.example.supabase.co',
+    anonKey: 'pages-key',
+  });
 });
 
 /**

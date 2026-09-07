@@ -23,6 +23,8 @@
  * doing, but it is a separate change with its own blast radius.
  */
 
+import { getSupabaseConfig } from './env.js';
+
 const PROFILE_COLUMNS =
   'id,role,propspace_agent_id,propspace_agent_name,manager_id,is_active';
 
@@ -34,12 +36,13 @@ const PROFILE_COLUMNS =
  * access to this data, and is_active = false is how access is taken away.
  */
 export async function requireProfile(user, token, env) {
-  const url =
-    `${env.SUPABASE_URL}/rest/v1/profiles` +
+  const { url, anonKey } = getSupabaseConfig(env);
+  const profileUrl =
+    `${url}/rest/v1/profiles` +
     `?select=${PROFILE_COLUMNS}&id=eq.${encodeURIComponent(user.id)}&limit=1`;
 
-  const res = await fetch(url, {
-    headers: { Authorization: `Bearer ${token}`, apikey: env.SUPABASE_ANON_KEY },
+  const res = await fetch(profileUrl, {
+    headers: { Authorization: `Bearer ${token}`, apikey: anonKey },
   });
 
   if (!res.ok) {
@@ -57,11 +60,12 @@ export async function requireProfile(user, token, env) {
 
 /** PostgREST calls functions by named argument; team_agent_ids(for_user uuid). */
 async function callTeamAgentIds(uid, token, env) {
-  const res = await fetch(`${env.SUPABASE_URL}/rest/v1/rpc/team_agent_ids`, {
+  const { url, anonKey } = getSupabaseConfig(env);
+  const res = await fetch(`${url}/rest/v1/rpc/team_agent_ids`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
-      apikey: env.SUPABASE_ANON_KEY,
+      apikey: anonKey,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ for_user: uid }),

@@ -24,6 +24,7 @@
  * role and the upstream queries can be filtered by it.
  */
 
+import { getSupabaseConfig } from './_lib/env.js';
 import { isValidSession } from './_lib/session.js';
 
 const GUARDED = ['/ps/', '/pf/', '/api/', '/meta/'];
@@ -56,20 +57,23 @@ export async function onRequest(context) {
   if (!GUARDED.some((p) => pathname.startsWith(p))) return next();
   if (MACHINE_CALLERS.some((p) => pathname.startsWith(p))) return next();
 
-  // Misconfiguration must fail closed. If these are missing, every request is
-  // unverifiable, and serving the data anyway would be exactly the leak this
-  // file exists to prevent.
-  if (!env.SUPABASE_URL || !env.SUPABASE_ANON_KEY) {
+  // Misconfiguration must fail closed. The app may be configured with either
+  // the Pages names or the public Vite/NEXT_PUBLIC names. Accept either form so
+  // we do not block a valid signed-in user because of a naming mismatch.
+  const { url, anonKey } = getSupabaseConfig(env);
+  if (!url || !anonKey) {
     return json(
       {
         error: 'Auth is not configured on this deployment.',
         detail:
-          'Set SUPABASE_URL and SUPABASE_ANON_KEY in the Pages project so the ' +
-          'proxy can verify sessions. Refusing to proxy without them.',
+          'Set SUPABASE_URL and SUPABASE_ANON_KEY (or the NEXT_PUBLIC equivalent) ' +
+          'in the Pages project so the proxy can verify sessions. Refusing to proxy without them.',
       },
       503
     );
   }
+
+  context.data.supabase = { url, anonKey };
 
   const auth = request.headers.get('Authorization') ?? '';
   const token = auth.startsWith('Bearer ') ? auth.slice(7).trim() : null;
@@ -80,7 +84,7 @@ export async function onRequest(context) {
 
   let user;
   try {
-    user = await isValidSession(token, env);
+    user = await isValidSession(token, context.data.supabase ?? getSupabaseConfig(env));
   } catch (err) {
     // Supabase itself was unreachable. That is not the caller's session being
     // invalid, and calling it a 401 would send a signed-in user back to a login

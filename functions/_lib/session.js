@@ -28,6 +28,8 @@
  * shared across them, and isolates are recycled freely. Treat this as a
  * hit-rate optimisation, never as state to rely on.
  */
+import { getSupabaseConfig } from './env.js';
+
 const sessions = new Map();
 
 const TTL_MS = 60_000;
@@ -51,10 +53,11 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
  * failing the whole page load for it is worse than waiting 300ms.
  */
 async function check(token, env, attempt = 0) {
-  const res = await fetch(`${env.SUPABASE_URL}/auth/v1/user`, {
+  const { url, anonKey } = getSupabaseConfig(env);
+  const res = await fetch(`${url}/auth/v1/user`, {
     headers: {
       Authorization: `Bearer ${token}`,
-      apikey: env.SUPABASE_ANON_KEY,
+      apikey: anonKey,
     },
   });
 
