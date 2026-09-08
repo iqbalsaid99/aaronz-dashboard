@@ -84,7 +84,7 @@ export async function onRequest(context) {
 
   let user;
   try {
-    user = await isValidSession(token, context.data.supabase ?? getSupabaseConfig(env));
+    user = await isValidSession(token, env);
   } catch (err) {
     // Supabase itself was unreachable. That is not the caller's session being
     // invalid, and calling it a 401 would send a signed-in user back to a login
